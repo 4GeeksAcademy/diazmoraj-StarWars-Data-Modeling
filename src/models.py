@@ -13,7 +13,7 @@ class User(Base):
     userid = Column(Integer,primary_key=True)
     name = Column(String(50), nullable=False)
     email = Column(String(50), unique=True)
-    password = Column(String(32) nullable=True)
+    password = Column(String(32), nullable=True)
 
 class People(Base):
     __tablename__ = 'people'
@@ -41,26 +41,32 @@ class Starships(Base):
     name = Column(String(50), nullable=True)
     model = Column(String(10), nullable=True)
     cost = Column(Integer, nullable=True)
-    pilot = Column(String(50), nullable=True)
+    pilot = Column(Integer, nullable=True)
 
 class FavPlanet(Base):
-    ___tablename__ = 'favplanet'
+    __tablename__ = 'favplanet'
 
-    id = Column(Integer, pimary_key=True)
+    favplanetid = Column(Integer, primary_key=True)
     userid = Column(Integer, ForeignKey('user.userid'))
     userid_relationship = relationship(User)
     planetid = Column(Integer, ForeignKey('planet.planetid'))
     planetid_relationship = relationship(Planet)
 
+class FavPeople(Base):
+    __tablename__ = 'favpeople'
+    favpleopleid = Column(Integer, primary_key=True)
+    userid = Column(Integer, ForeignKey('user.userid'))
+    userid_relationship = relationship(User)
+    peopleid = Column(Integer, ForeignKey('peoplet.peopleid'))
+    peopleid_relationship = relationship(People)
 
-
-class Address(Base):
-   
-    person_id = Column(Integer, ForeignKey('person.id'))
-    person = relationship(Person)
-
-    def to_dict(self):
-        return {}
+class FavStarships(Base):
+    __tablename__ = 'favstarships'
+    favstartshipsid = Column(Integer, pr  imary_key=True)
+    userid = Column(Integer, ForeignKey('user.userid'))
+    userid_relationship = relationship(User)
+    starshipsid = Column(Integer, ForeignKey('starships.starshipsid'))
+    starshipsid_relationship = relationship(Starships)
 
 ## Draw from SQLAlchemy base
 render_er(Base, 'diagram.png')
